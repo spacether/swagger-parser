@@ -1210,7 +1210,13 @@ public class SwaggerConverter implements SwaggerParserExtension {
             if (v2Model instanceof ModelImpl) {
                 ModelImpl model = (ModelImpl) v2Model;
 
-                if (model.getAdditionalProperties() != null) {
+                if (model.getAdditionalProperties() == null) {
+                    // For False this is null
+                    // For absent this is null
+                    // this is a problem with the 1.0.52 swagger parser
+                    // I think that I need to override the
+                    result.setAdditionalProperties(new Schema());
+                } else {
                     result.setAdditionalProperties(convert(model.getAdditionalProperties()));
                 }
             } else if(v2Model instanceof RefModel) {

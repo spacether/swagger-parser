@@ -96,6 +96,7 @@ public class V2ConverterTest {
     private static final String ISSUE_1113_YAML = "issue-1113.yaml";
     private static final String ISSUE_1164_YAML = "issue-1164.yaml";
     private static final String ISSUE_1261_YAML = "issue-1261.yaml";
+    private static final String ISSUE_1369_YAML = "issue-1369.yaml";
 
     private static final String API_BATCH_PATH = "/api/batch/";
     private static final String PETS_PATH = "/pets";
@@ -869,5 +870,28 @@ public class V2ConverterTest {
         Schema petCategoryInline = oas.getComponents().getSchemas().get("Pet_categoryInline");
         assertNotNull(petCategoryInline);
 
+    }
+
+    @Test(description = "OpenAPI v2 converter - verifies the additionalProperties")
+    public void testissue1369() throws Exception {
+        OpenAPI oas = getConvertedOpenAPIFromJsonFile(ISSUE_1369_YAML);
+        assertNotNull(oas);
+        Schema schema;
+
+//        schema = (Schema) oas.getComponents().getSchemas().get("NoAdditionalProperties");
+//        assertNotNull(schema);
+//        assertNotNull(schema.getAdditionalProperties());
+//
+//        schema = (Schema) oas.getComponents().getSchemas().get("AdditionalPropertiesIsTrue");
+//        assertNotNull(schema);
+//        assertNotNull(schema.getAdditionalProperties());
+
+        schema = (Schema) oas.getComponents().getSchemas().get("AdditionalPropertiesIsFalse");
+        assertNotNull(schema);
+        assertNull(schema.getAdditionalProperties());
+
+//        schema = (Schema) oas.getComponents().getSchemas().get("AdditionalPropertiesIsString");
+//        assertNotNull(schema);
+//        assertNotNull(schema.getAdditionalProperties());
     }
 }
